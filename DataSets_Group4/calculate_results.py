@@ -20,6 +20,36 @@ def open_file(file_name):
 
     return matches_dict
 
+class DatabaseConnector:
+
+    def __init__(
+            self,
+            database_name: str
+    ) -> None:
+        """
+            Initialisiert den kontextmanager
+
+        :param database_name: Name der Datenbank
+        """
+        self._database_name = database_name
+
+
+    def __enter__(self):
+        """
+            Initialisiert die Datenbankverbindung und erstellt einen Cursor
+
+        :return: Gibt den DatabaseConnector zurück
+        """
+        self._connection = sqlite3.connect(self._database_name) # Verbindung zur SQLite-Datenbank herstellen
+        self._cursor = self._connection.cursor() # Cursor_Objekt erstellen, um SQL-Befehle auszuführen
+        return self
+
+    def __exit__(self, database_name):
+        """
+            Schließt die Datenbankverbindung, wenn der Kontext verlassen wird
+        """
+        self._connection.close() # Verbindung zur SQLite-Datenbank schließen
+
 if __name__ == "__main__":
     csv_file = "FootballResults.csv"
 
