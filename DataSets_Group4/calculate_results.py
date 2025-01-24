@@ -1,8 +1,7 @@
 import csv
 import pandas as pd
 import sqlite3
-
-# Test
+import streamlit as st
 
 def open_file(file_name):
     with open(file_name, mode="r") as file:
@@ -21,7 +20,6 @@ def open_file(file_name):
     return matches_dict
 
 class DatabaseConnector:
-
     def __init__(
             self,
             database_name: str
@@ -32,7 +30,6 @@ class DatabaseConnector:
         :param database_name: Name der Datenbank
         """
         self._database_name = database_name
-
 
     def __enter__(self):
         """
@@ -70,22 +67,11 @@ class DatabaseConnector:
         df.to_sql(table_name, self._connection, if_exists="replace", index=False)
         self._connection.commit()
 
-    def fetch_data(self, table_name: str, limit: int = 10):
-        """
-            Ruft eine begrenzte Anzahl von Zeilen aus der angegebenen Tabelle ab.
-
-            :param table_name: Name der Tabelle in der Datenbank
-            :param limit: Anzahl der Zeilen, die abgerufen werden sollen (Standard: 10)
-            :return: Abgerufene Daten als Liste von Tupeln
-        """
-        self._cursor.execute(f"SELECT * FROM {table_name} LIMIT {limit}")
-        return self._cursor.fetchall()
-
-
 if __name__ == "__main__":
+
     csv_file = "FootballResults.csv" #Name der CSV-Datei
     database_name = "International_matches.db" #Name der SQLite-Datenbank
-    table_name = "matches" # Name der Tablle in der Datenbank
+    table_name = "matches" # Name der Tabelle in der Datenbank
 
     """with DatabaseConnector(database_name) as db:
         #CSV-Daten importieren
