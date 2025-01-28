@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 from calculate_results import get_matches_between_teams
 from calculate_results import get_unique_countries
@@ -22,6 +23,11 @@ if countries:
         matches = get_matches_between_teams(team1, team2)
 
         if matches:
+            # Zeige die Spiele, die für die Berechnungen verwendet wurden
+            st.write(f"Spiele zwischen {team1} und {team2}, die für die Berechnungen verwendet wurden:")
+            matches_df = pd.DataFrame(matches)  # Konvertiere die Spiele in ein Pandas DataFrame
+            st.dataframe(matches_df)  # Zeige die Spiele als interaktive Tabelle an
+
             probabilities = calculate_win_probabilities(matches, team1, team2)
 
             st.write(f"Wahrscheinlichkeit für {team1} zu gewinnen: {probabilities['team1_win']:.2%}")
