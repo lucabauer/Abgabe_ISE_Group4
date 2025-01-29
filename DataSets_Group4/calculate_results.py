@@ -56,43 +56,6 @@ class DatabaseConnector:
             # Keine Ausnahme unterdrücken; Standardverhalten übernehmen
         return False
 
-def insert_csv_data_pandas(
-            self,
-            csv_path: str,
-            table_name:str
-        ):
-        #CSv Datei mit pandas einlesen
-        df = pd.read_csv(csv_path)
-
-        #Daten in die SQLite-Datenbank schreiben
-        df.to_sql(table_name, self._connection, if_exists="replace", index=False)
-        self._connection.commit()
-
-def get_unique_countries(database_name = "International_matches.db"):
-    """Holt alle eindeutigen Länder aus den Spalten 'home_team' und 'away_team'."""
-    query = """
-        SELECT DISTINCT home_team AS team FROM matches
-        UNION
-        SELECT DISTINCT away_team AS team FROM matches
-        ORDER BY team
-        """
-    with DatabaseConnector(database_name) as db:
-        countries = db._cursor.execute(query)
-        countries = [row["team"] for row in db._cursor.fetchall()]
-        return countries
-
-def get_matches_between_teams(team1, team2, database_name = "International_matches.db"):
-    """Holt alle Spiele zwischen zwei Teams aus der Datenbank."""
-    query = """
-        SELECT * 
-        FROM matches 
-        WHERE (home_team = ? AND away_team = ?) OR (home_team = ? AND away_team = ?)
-        """
-    with DatabaseConnector(database_name) as db:
-        games = db._cursor.execute(query, (team1, team2, team2, team1))
-        games = db._cursor.fetchall()
-        return games
-
 def calculate_win_probabilities(matches, team1, team2):
     """Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden."""
     team1_wins = 0
