@@ -8,7 +8,7 @@ from calculations import plot_win_probabilities
 
 st.title("Football Result Predictor")
 
-st.text("Hier kann man Vorhersagen zu Spielergebnissen sehen , "
+st.write("Hier kann man Vorhersagen zu Spielergebnissen sehen , "
         "die basierend auf vergangenen Spielen sind.")
 
 countries = get_unique_countries()
@@ -50,8 +50,6 @@ if countries:
             st.write(f"Hier sind alle erfassten Spiele zwischen {team1} und {team2}:")
             matches_df = pd.DataFrame(matches)  # Konvertiere die Spiele in ein Pandas DataFrame
             st.dataframe(matches_df)  # Zeige die Spiele als interaktive Tabelle an
-
-
 
         else:
             st.write("Keine Spiele zwischen diesen Teams gefunden.")
