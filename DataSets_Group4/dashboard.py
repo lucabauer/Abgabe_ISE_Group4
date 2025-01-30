@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-from calculate_results import get_matches_between_teams
-from calculate_results import get_unique_countries
-from calculate_results import calculate_win_probabilities
-from calculate_results import plot_win_probabilities
+from database import get_matches_between_teams
+from database import get_unique_countries
+from calculations import calculate_win_probabilities
+from calculations import plot_win_probabilities
 
 st.title("Football Result Predictor")
 
