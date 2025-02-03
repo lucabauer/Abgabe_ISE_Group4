@@ -1,15 +1,13 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
+import sys
+import os
 
-from database import get_matches_between_teams
-from database import get_unique_countries
-from calculations import calculate_win_probabilities
-from calculations import plot_win_probabilities
+# Füge den übergeordneten Ordner zum Python-Suchpfad hinzu
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-st.title("Football Result Predictor")
-
-st.write("Hier kann man Vorhersagen zu Spielergebnissen sehen , "
-        "die basierend auf vergangenen Spielen sind.")
+from DataSets_Group4.database import get_matches_between_teams, get_unique_countries
+from DataSets_Group4.calculations import calculate_win_probabilities, plot_win_probabilities
 
 countries = get_unique_countries()
 
