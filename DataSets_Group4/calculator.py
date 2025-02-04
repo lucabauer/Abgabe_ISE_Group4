@@ -4,10 +4,8 @@ import sys
 import os
 
 # Füge den übergeordneten Ordner zum Python-Suchpfad hinzu
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
-
-from DataSets_Group4.database import get_matches_between_teams, get_unique_countries
-from DataSets_Group4.calculations import calculate_win_probabilities, plot_win_probabilities
+from database import get_matches_between_teams, get_unique_countries
+from calculations import calculate_win_probabilities, plot_win_probabilities
 
 countries = get_unique_countries()
 
