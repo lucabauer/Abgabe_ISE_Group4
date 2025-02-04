@@ -77,3 +77,17 @@ def get_matches_between_teams(team1, team2, database_name="International_matches
         games = db._cursor.execute(query, (team1, team2, team2, team1))
         games = db._cursor.fetchall()
         return games
+
+def get_matches_by_team(team, database_name="International_matches.db"):
+    """Holt alle Spiele eines Teams aus der Datenbank (egal ob Heim- oder Auswärtsspiel)."""
+    query = """
+        SELECT * 
+        FROM matches 
+        WHERE home_team = ? OR away_team = ?
+        ORDER BY date DESC
+        """
+
+    with DatabaseConnector(database_name) as db:
+        games= db._cursor.execute(query, (team, team))
+        games = db._cursor.fetchall()
+        return games

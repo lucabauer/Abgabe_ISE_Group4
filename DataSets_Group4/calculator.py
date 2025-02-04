@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-import sys
-import os
+
 
 # Füge den übergeordneten Ordner zum Python-Suchpfad hinzu
 from database import get_matches_between_teams, get_unique_countries

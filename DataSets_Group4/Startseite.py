@@ -2,17 +2,18 @@ import streamlit as st
 
 def startseite():
     st.title("Football Result Predictor")
+    st.write("Hier kann man Vorhersagen zu Spielergebnissen sehen , "
+        "die basierend auf vergangenen Spielen sind.")
 
-st.sidebar.title("Navigation")
+    if st.button("Start"):
+        st.switch_page("calculator.py")
 
 def calculation():
     st.title("Rechner")
 
-pg = st.navigation([st.Page(startseite), st.Page("calculator.py")])
+def AllGamesOfCountry():
+    st.title("Alle Spiele eines Landes")
+
+pg = st.navigation([st.Page(startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py")])
 pg.run()
 
-st.write("Hier kann man Vorhersagen zu Spielergebnissen sehen , "
-        "die basierend auf vergangenen Spielen sind.")
-
-if st.button("Start"):
-    st.switch_page("calculator.py")
