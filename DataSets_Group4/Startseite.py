@@ -15,6 +15,6 @@ def Startseite():
 def all_games_of_country():
     st.title("Alle Spiele eines Landes")
 
-pg = st.navigation([st.Page(Startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py")])
+pg = st.navigation([st.Page(Startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py"), st.Page("TurnierAnalyse.py")])
 pg.run()
 

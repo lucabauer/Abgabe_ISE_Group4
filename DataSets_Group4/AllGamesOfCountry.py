@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-from calculations import plot_team_record_pie_chart
+from calculations import plot_team_record_pie_chart, get_team_record
 from database import get_unique_countries
 from database import get_matches_by_team
-from calculations import get_team_record
+
 
 st.title("📊 Länderspiele anzeigen")
 
@@ -13,10 +13,10 @@ countries = get_unique_countries()
 # Falls Länder vorhanden sind, eine Selectbox anzeigen
 if countries:
     team = st.selectbox(
-        "Wähle Team 1",
+        "Wähle ein Team ",
         countries,
         index=None,
-        placeholder="Team 1",
+        placeholder="Team ",
     )
 
     # Wenn ein Team ausgewählt wurde, spiele anzeigen

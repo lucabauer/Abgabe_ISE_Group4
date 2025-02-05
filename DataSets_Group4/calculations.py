@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
-from database import get_matches_by_team
+
+import pandas as pd
 
 
 def calculate_win_probabilities(matches, team1, team2):
@@ -83,10 +84,6 @@ def get_team_record(team, matches):
     return {"Siege": wins, "Unentschieden": draws, "Niederlagen": losses}
 
 
-import matplotlib.pyplot as plt
-
-import plotly.graph_objects as go
-
 def plot_team_record_pie_chart(record):
     """Erstellt ein Pie-Chart für die Bilanz eines Teams mit Plotly."""
 
@@ -114,4 +111,80 @@ def plot_team_record_pie_chart(record):
 
     return fig
 
+
+def calculate_team_statistics(matches):
+    """Berechnet Statistiken für jedes Team in einem Turnier und die durchschnittlichen Tore pro Spiel."""
+    team_stats = {}
+    total_goals = 0
+
+    for match in matches:
+        home_team, away_team = match["home_team"], match["away_team"]
+        home_score, away_score = match["home_score"], match["away_score"]
+
+        for team in [home_team, away_team]:
+            if team not in team_stats:
+                team_stats[team] = {"Punkte": 0, "Tore": 0, "Gegentore": 0, "Siege": 0, "Unentschieden": 0, "Niederlagen": 0}
+
+        team_stats[home_team]["Tore"] += home_score
+        team_stats[home_team]["Gegentore"] += away_score
+        team_stats[away_team]["Tore"] += away_score
+        team_stats[away_team]["Gegentore"] += home_score
+
+        if home_score > away_score:
+            team_stats[home_team]["Punkte"] += 3
+            team_stats[home_team]["Siege"] += 1
+            team_stats[away_team]["Niederlagen"] += 1
+        elif home_score < away_score:
+            team_stats[away_team]["Punkte"] += 3
+            team_stats[away_team]["Siege"] += 1
+            team_stats[home_team]["Niederlagen"] += 1
+        else:
+            team_stats[home_team]["Punkte"] += 1
+            team_stats[away_team]["Punkte"] += 1
+            team_stats[home_team]["Unentschieden"] += 1
+            team_stats[away_team]["Unentschieden"] += 1
+
+        total_goals += home_score + away_score
+
+    avg_goals = round(total_goals / len(matches), 2) if matches else 0
+
+    return team_stats, avg_goals
+
+
+def get_best_teams(stats_dict):
+    """Sortiert die Teams nach Punkten und gibt die Top-Teams zurück."""
+    stats_df = pd.DataFrame.from_dict(stats_dict, orient="index")
+    stats_df["Tordifferenz"] = stats_df["Tore"] - stats_df["Gegentore"]
+    stats_df = stats_df.sort_values(by=["Punkte", "Tordifferenz", "Tore"], ascending=[False, False, False])
+
+    return stats_df
+
+
+def find_biggest_win(matches):
+    """Findet das Spiel mit dem höchsten Sieg (größter Torunterschied)."""
+    biggest_win = max(matches, key=lambda match: abs(match["home_score"] - match["away_score"]), default=None)
+    if biggest_win:
+        return f"{biggest_win['home_team']} {biggest_win['home_score']} - {biggest_win['away_score']} {biggest_win['away_team']}"
+    return "Keine Daten verfügbar"
+
+from database import get_matches_by_tournament
+
+
+
+def get_top_teams_by_tournament(tournament_name, database_name="International_matches.db"):
+    """Gibt eine umfassende Turnieranalyse zurück."""
+    matches = get_matches_by_tournament(tournament_name, database_name)
+
+    if not matches:
+        return "Keine Daten für dieses Turnier gefunden."
+
+    team_stats, avg_goals = calculate_team_statistics(matches)
+    top_teams = get_best_teams(team_stats)
+    biggest_win = find_biggest_win(matches)
+
+    return {
+        "Top Teams": top_teams,
+        "Höchster Sieg": biggest_win,
+        "Durchschnittliche Tore pro Spiel": avg_goals
+    }
 

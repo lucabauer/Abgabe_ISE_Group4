@@ -50,3 +50,4 @@ if countries:
             st.write("Keine Spiele zwischen diesen Teams gefunden.")
 else:
     st.warning("Keine Länder in der Datenbank gefunden!")
+

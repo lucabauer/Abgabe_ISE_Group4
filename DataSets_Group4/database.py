@@ -91,3 +91,31 @@ def get_matches_by_team(team, database_name="International_matches.db"):
         games= db._cursor.execute(query, (team, team))
         games = db._cursor.fetchall()
         return games
+
+
+def get_tournaments(database_name="International_matches.db"):
+    """Holt alle einzigartigen Turniernamen aus der Datenbank."""
+    query = """
+        SELECT DISTINCT tournament 
+        FROM matches
+        ORDER BY tournament
+    """
+
+    with DatabaseConnector(database_name) as db:
+        tournaments = db._cursor.execute(query)
+        tournaments = [row["tournament"] for row in db._cursor.fetchall()]
+        return tournaments
+
+def get_matches_by_tournament(tournament_name, database_name="International_matches.db"):
+    """Holt alle Spiele eines bestimmten Turniers aus der Datenbank."""
+    query = """
+        SELECT * 
+        FROM matches 
+        WHERE tournament = ?
+        ORDER BY date ASC
+        """
+
+    with DatabaseConnector(database_name) as db:
+        games = db._cursor.execute(query, (tournament_name,))
+        games = db._cursor.fetchall()
+        return games
