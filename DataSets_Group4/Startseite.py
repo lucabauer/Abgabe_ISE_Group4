@@ -1,6 +1,6 @@
 import streamlit as st
 
-def startseite():
+def Startseite():
     st.title("⚽️ Football Result Predictor")
     st.write("Willkommen zu unserem interaktiven Fußball-Dashboard! Hier kannst du nicht nur vergangene Länderspiele eines Teams einsehen, sondern auch die Gewinnwahrscheinlichkeit zwischen zwei Teams berechnen.")
     st.write("✨ Funktionen:")
@@ -12,12 +12,9 @@ def startseite():
 
     st.image("Stadion.jpg")
 
-def calculation():
-    st.title("Rechner")
-
 def all_games_of_country():
     st.title("Alle Spiele eines Landes")
 
-pg = st.navigation([st.Page(startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py")])
+pg = st.navigation([st.Page(Startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py")])
 pg.run()
 

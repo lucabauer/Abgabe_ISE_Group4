@@ -1,4 +1,6 @@
 import plotly.graph_objects as go
+from database import get_matches_by_team
+
 
 def calculate_win_probabilities(matches, team1, team2):
     """Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden."""
@@ -53,3 +55,63 @@ def plot_win_probabilities(probabilities, team1, team2):
         template="plotly_white"
     )
     return fig
+
+def get_team_record(team, matches):
+    """Berechnet die Anzahl der Siege, Niederlagen und Unentschieden eines Teams."""
+
+    # Initialisiere Zähler
+    wins = 0
+    draws = 0
+    losses = 0
+
+    for match in matches:
+        if team == match["home_team"]:  # Vergleiche das Team mit dem Heimteam
+            if match["home_score"] > match["away_score"]:
+                wins += 1
+            elif match["home_score"] < match["away_score"]:
+                losses += 1  # Niederlage als Heimteam
+            else:
+                draws += 1  # Unentschieden
+        elif team == match["away_team"]:  # Vergleiche das Team mit dem Auswärtsteam
+            if match["away_score"] > match["home_score"]:
+                wins += 1  # Sieg als Auswärtsteam
+            elif match["away_score"] < match["home_score"]:
+                losses += 1  # Niederlage als Auswärtsteam
+            else:
+                draws += 1  # Unentschieden
+
+    return {"Siege": wins, "Unentschieden": draws, "Niederlagen": losses}
+
+
+import matplotlib.pyplot as plt
+
+import plotly.graph_objects as go
+
+def plot_team_record_pie_chart(record):
+    """Erstellt ein Pie-Chart für die Bilanz eines Teams mit Plotly."""
+
+    # Daten für das Diagramm
+    labels = ['Siege', 'Unentschieden', 'Niederlagen']
+    values = [record['Siege'], record['Unentschieden'], record['Niederlagen']]
+    colors = ['#4CAF50', '#FFC107', '#F44336']  # Farben für die Segmente (Grün, Gelb, Rot)
+
+    # Erstelle das Pie-Chart mit Plotly
+    fig = go.Figure(
+        data=[go.Pie(
+            labels=labels,
+            values=values,
+            marker=dict(colors=colors),
+            textinfo="percent+label",  # Zeige Prozent und Label an
+            hole=0.3  # Halbkreis-Effekt für eine moderne Darstellung (Optional)
+        )]
+    )
+
+    # Titel hinzufügen
+    fig.update_layout(
+        title="Bilanz des Teams",
+        title_x=0.5  # Titel zentrieren
+    )
+
+    return fig
+
+
