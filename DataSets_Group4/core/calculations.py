@@ -1,6 +1,8 @@
 import pandas as pd
 
-from core.database import get_matches_by_tournament
+from core.database import get_matches_by_tournament,get_tournaments_by_team
+
+
 
 def calculate_win_probabilities(matches, team1, team2):
     """Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden."""
@@ -129,3 +131,25 @@ def get_top_teams_by_tournament(tournament_name, database_name="International_ma
         "Durchschnittliche Tore pro Spiel": avg_goals
     }
 
+
+def get_team_tournament_performance(team, database_name="International_matches.db"):
+    """Berechnet die Turnier-Performance eines Teams durch Wiederverwendung bestehender Funktionen."""
+    tournaments = get_tournaments_by_team(team, database_name)
+    performance = []
+
+    for tournament in tournaments:
+        matches = get_matches_by_tournament(tournament, database_name)
+        team_stats, _ = calculate_team_statistics(matches)
+
+        if team in team_stats:
+            stats = team_stats[team]
+            performance.append({
+                "Turnier": tournament,
+                "Tore": stats["Tore"],
+                "Gegentore": stats["Gegentore"],
+                "Siege": stats["Siege"],
+                "Unentschieden": stats["Unentschieden"],
+                "Niederlagen": stats["Niederlagen"]
+            })
+
+    return performance

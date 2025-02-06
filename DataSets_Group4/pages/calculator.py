@@ -5,6 +5,10 @@ from core.calculations import calculate_win_probabilities
 from core.visualizations import  plot_win_probabilities
 from core.database import get_matches_between_teams, get_unique_countries
 
+# Setzt den richtigen Namen in der Sidebar-Navigation
+st.set_page_config(page_title="🔄 Länder Vergleich", page_icon="🔄")
+
+st.title("🔄 Länder Vergleich")
 
 countries = get_unique_countries()
 
@@ -13,14 +17,14 @@ if countries:
         "Wähle Team 1",
         countries,
         index=None,
-        placeholder = "Team 1",
+        placeholder="Team 1"
     )
 
     team2 = st.selectbox(
         "Wähle Team 2",
         countries,
         index=None,
-        placeholder="Team 2",
+        placeholder = "Team 2"
     )
 
     if team1 == team2:
@@ -50,4 +54,3 @@ if countries:
             st.write("Keine Spiele zwischen diesen Teams gefunden.")
 else:
     st.warning("Keine Länder in der Datenbank gefunden!")
-
