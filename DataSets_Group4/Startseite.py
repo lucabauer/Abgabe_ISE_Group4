@@ -8,13 +8,14 @@ def Startseite():
     st.write("📊 Gewinnwahrscheinlichkeit berechnen – Vergleiche zwei Teams und erhalte eine Einschätzung darüber, welches Team die besseren Chancen auf den Sieg hat.")
 
     if st.button("Start"):
-        st.switch_page("calculator.py")
+        st.switch_page("app/calculator.py")
 
-    st.image("Stadion.jpg")
+    st.image("static/Stadion.jpg")
 
 def all_games_of_country():
     st.title("Alle Spiele eines Landes")
 
-pg = st.navigation([st.Page(Startseite), st.Page("calculator.py"), st.Page("AllGamesOfCountry.py"), st.Page("TurnierAnalyse.py")])
+pg = st.navigation([st.Page(Startseite), st.Page("app/calculator.py"), st.Page("app/AllGamesOfCountry.py"), st.Page(
+    "app/TurnierAnalyse.py")])
 pg.run()
 

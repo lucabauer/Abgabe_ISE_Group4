@@ -1,7 +1,6 @@
-import plotly.graph_objects as go
-
 import pandas as pd
 
+from core.database import get_matches_by_tournament
 
 def calculate_win_probabilities(matches, team1, team2):
     """Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden."""
@@ -31,32 +30,6 @@ def calculate_win_probabilities(matches, team1, team2):
         "draw": draws / total_matches,
     }
 
-def plot_win_probabilities(probabilities, team1, team2):
-    """Erstellt ein interaktives Tortendiagramm für die Wahrscheinlichkeiten der Spielergebnisse."""
-    labels = [f"Sieg {team1}", "Unentschieden", f"Sieg {team2}"]
-    values = [
-        probabilities["team1_win"],
-        probabilities["draw"],
-        probabilities["team2_win"]
-    ]
-    colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]  # Blau, Orange, Grün
-
-    fig = go.Figure(
-        data=[go.Pie(
-            labels=labels,
-            values=values,
-            marker=dict(colors=colors),
-            textinfo="percent+label",
-            hole=0.3  # Halbkreis-Effekt für eine moderne Darstellung (Optional)
-        )]
-    )
-
-    fig.update_layout(
-        title="Wahrscheinlichkeit für den Spielausgang",
-        template="plotly_white"
-    )
-    return fig
-
 def get_team_record(team, matches):
     """Berechnet die Anzahl der Siege, Niederlagen und Unentschieden eines Teams."""
 
@@ -82,35 +55,6 @@ def get_team_record(team, matches):
                 draws += 1  # Unentschieden
 
     return {"Siege": wins, "Unentschieden": draws, "Niederlagen": losses}
-
-
-def plot_team_record_pie_chart(record):
-    """Erstellt ein Pie-Chart für die Bilanz eines Teams mit Plotly."""
-
-    # Daten für das Diagramm
-    labels = ['Siege', 'Unentschieden', 'Niederlagen']
-    values = [record['Siege'], record['Unentschieden'], record['Niederlagen']]
-    colors = ['#4CAF50', '#FFC107', '#F44336']  # Farben für die Segmente (Grün, Gelb, Rot)
-
-    # Erstelle das Pie-Chart mit Plotly
-    fig = go.Figure(
-        data=[go.Pie(
-            labels=labels,
-            values=values,
-            marker=dict(colors=colors),
-            textinfo="percent+label",  # Zeige Prozent und Label an
-            hole=0.3  # Halbkreis-Effekt für eine moderne Darstellung (Optional)
-        )]
-    )
-
-    # Titel hinzufügen
-    fig.update_layout(
-        title="Bilanz des Teams",
-        title_x=0.5  # Titel zentrieren
-    )
-
-    return fig
-
 
 def calculate_team_statistics(matches):
     """Berechnet Statistiken für jedes Team in einem Turnier und die durchschnittlichen Tore pro Spiel."""
@@ -166,9 +110,6 @@ def find_biggest_win(matches):
     if biggest_win:
         return f"{biggest_win['home_team']} {biggest_win['home_score']} - {biggest_win['away_score']} {biggest_win['away_team']}"
     return "Keine Daten verfügbar"
-
-from database import get_matches_by_tournament
-
 
 
 def get_top_teams_by_tournament(tournament_name, database_name="International_matches.db"):

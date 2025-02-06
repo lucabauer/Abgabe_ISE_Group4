@@ -1,7 +1,7 @@
 import streamlit as st
 
-from database import get_tournaments
-from calculations import get_top_teams_by_tournament
+from core.database import get_tournaments
+from core.calculations import get_top_teams_by_tournament
 
 st.title("🏆 Turnier-Analyse")
 

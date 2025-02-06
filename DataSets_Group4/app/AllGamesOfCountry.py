@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 
-from calculations import plot_team_record_pie_chart, get_team_record
-from database import get_unique_countries
-from database import get_matches_by_team
-
+from core.calculations import get_team_record
+from core.database import get_unique_countries, get_matches_by_team
+from core.visualizations import plot_team_record_pie_chart
 
 st.title("📊 Länderspiele anzeigen")
 

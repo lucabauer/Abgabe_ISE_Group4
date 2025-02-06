@@ -1,10 +1,10 @@
 import pandas as pd
 import streamlit as st
 
+from core.calculations import calculate_win_probabilities
+from core.visualizations import  plot_win_probabilities
+from core.database import get_matches_between_teams, get_unique_countries
 
-# Füge den übergeordneten Ordner zum Python-Suchpfad hinzu
-from database import get_matches_between_teams, get_unique_countries
-from calculations import calculate_win_probabilities, plot_win_probabilities
 
 countries = get_unique_countries()
 

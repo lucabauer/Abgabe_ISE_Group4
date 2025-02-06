@@ -1,9 +1,9 @@
 
-from database import DatabaseConnector
+from core.database import DatabaseConnector
 
 if __name__ == "__main__":
 
-    csv_file = "FootballResults.csv" #Name der CSV-Datei
+    csv_file = "data/FootballResults.csv"  #Name der CSV-Datei
     database_name = "International_matches.db" #Name der SQLite-Datenbank
     table_name = "matches" # Name der Tabelle in der Datenbank
 
