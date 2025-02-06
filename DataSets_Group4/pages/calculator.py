@@ -10,6 +10,13 @@ st.set_page_config(page_title="🔄 Länder Vergleich", page_icon="🔄")
 
 st.title("🔄 Länder Vergleich")
 
+st.write("Vergleiche zwei Nationalmannschaften und entdecke ihre bisherige Bilanz!")
+st.write("🔹 Alle direkten Duelle auf einen Blick")
+st.write("In der übersichtlichen Tabelle 📋 findest du alle Spiele, die die beiden Teams gegeneinander bestritten haben – inklusive Ergebnisse und Details.")
+st.write("🔹 Anschauliches Kreisdiagramm")
+st.write("Das Diagramm 🥧 zeigt dir auf einen Blick, wie oft eine Mannschaft gewonnen 🏆, unentschieden gespielt 🤝 oder verloren ❌ hat.")
+st.write("Analysiere die Statistiken und finde heraus, welches Team historisch die Nase vorn hat! 🚀")
+
 countries = get_unique_countries()
 
 if countries:
