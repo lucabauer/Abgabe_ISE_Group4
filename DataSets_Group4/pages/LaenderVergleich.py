@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 
-from core.calculations import calculate_win_probabilities
-from core.visualizations import  plot_win_probabilities
+from core.calculations import calculate_head_to_head_stats
+from core.visualizations import  plot_head_to_head_stats
 from core.database import get_matches_between_teams, get_unique_countries
 
 # Setzt den richtigen Namen in der Sidebar-Navigation
@@ -50,14 +50,14 @@ if countries:
 
         if matches:
 
-            probabilities = calculate_win_probabilities(matches, team1, team2)
+            head_to_head_stats = calculate_head_to_head_stats(matches, team1, team2)
 
-            fig = plot_win_probabilities(probabilities, team1, team2)
+            fig = plot_head_to_head_stats(head_to_head_stats, team1, team2)
             st.plotly_chart(fig)
 
-            st.write(f"Wahrscheinlichkeit für {team1} zu gewinnen: {probabilities['team1_win']:.2%}")
-            st.write(f"Wahrscheinlichkeit für {team2} zu gewinnen: {probabilities['team2_win']:.2%}")
-            st.write(f"Wahrscheinlichkeit für ein Unentschieden: {probabilities['draw']:.2%}")
+            st.write(f"{team1} hat {head_to_head_stats['team1_win']:.2%} der Spiele gewonnen")
+            st.write(f"{team2} hat {head_to_head_stats['team2_win']:.2%} der Spiele gewonnen")
+            st.write(f"Es wurde {head_to_head_stats['draw']:.2%} Unentschieden gespielt")
 
             # Zeige die Spiele, die für die Berechnungen verwendet wurden
             st.write(f"Hier sind alle erfassten Spiele zwischen {team1} und {team2}:")

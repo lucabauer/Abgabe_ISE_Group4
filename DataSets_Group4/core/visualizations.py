@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 
-def plot_win_probabilities(probabilities, team1, team2):
+def plot_head_to_head_stats(probabilities, team1, team2):
     """Erstellt ein interaktives Tortendiagramm für die Wahrscheinlichkeiten der Spielergebnisse."""
     labels = [f"Sieg {team1}", "Unentschieden", f"Sieg {team2}"]
     values = [

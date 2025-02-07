@@ -2,7 +2,7 @@ import pandas as pd
 
 from core.database import get_matches_by_tournament,get_tournaments_by_team
 
-def calculate_win_probabilities(matches, team1: str, team2: str):
+def calculate_head_to_head_stats(matches, team1: str, team2: str):
     """
     Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden.
 
