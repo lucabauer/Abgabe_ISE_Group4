@@ -2,16 +2,13 @@ import sqlite3
 import pandas as pd
 
 class DatabaseConnector:
-    def __init__(
-            self,
-            database_name: str
-    ) -> None:
+    def __init__(self,database_name: str) -> None:
         """
             Initialisiert den kontextmanager
 
         :param database_name: Name der Datenbank
         """
-        self._database_name = database_name
+        self._database_name: str = database_name
 
     def __enter__(self):
         """
@@ -31,18 +28,14 @@ class DatabaseConnector:
         if self._connection:
             self._connection.close()  # Verbindung zur SQLite-Datenbank schließen
 
-        if exc_type or exc_val or exc_tb:
-            # Debugging: Ausnahmen können hier geloggt werden
-            print(f"Exception occurred: {exc_type}, {exc_val}")
+    def insert_csv_data_pandas(self, csv_path: str, table_name: str) -> None:
+        """
+        Liest eine CSV Datei ein und speichert die Daten als Tabelle in die SQLite Datenbank.
 
-            # Keine Ausnahme unterdrücken; Standardverhalten übernehmen
-        return False
+        :param csv_path: Pfad zur CSV Datei
+        :param: Name der Tabelle
+        """
 
-    def insert_csv_data_pandas(
-            self,
-            csv_path: str,
-            table_name: str
-    ):
         # CSv Datei mit pandas einlesen
         df = pd.read_csv(csv_path)
 
@@ -50,8 +43,8 @@ class DatabaseConnector:
         df.to_sql(table_name, self._connection, if_exists="replace", index=False)
         self._connection.commit()
 
-#Sucht Länder in der DB
-def get_unique_countries(database_name="International_matches.db"):
+#Ruft eindeutige Länder aus der DB ab
+def get_unique_countries(database_name: str ="International_matches.db"):
     """Holt alle eindeutigen Länder aus den Spalten 'home_team' und 'away_team'."""
     query = """
         SELECT DISTINCT home_team AS team FROM matches
@@ -65,7 +58,7 @@ def get_unique_countries(database_name="International_matches.db"):
         return countries
 
 #Sucht alle Turniere aus der DB
-def get_tournaments(database_name="International_matches.db"):
+def get_tournaments(database_name: str ="International_matches.db"):
     """Holt alle einzigartigen Turniernamen aus der Datenbank."""
     query = """
         SELECT DISTINCT tournament 
@@ -79,7 +72,7 @@ def get_tournaments(database_name="International_matches.db"):
         return tournaments
 
 #Sucht Spiele zwischen zwei Ländern aus der DB
-def get_matches_between_teams(team1, team2, database_name="International_matches.db"):
+def get_matches_between_teams(team1: str, team2: str, database_name: str="International_matches.db"):
     """Holt alle Spiele zwischen zwei Teams aus der Datenbank."""
     query = """
         SELECT * 
@@ -92,8 +85,8 @@ def get_matches_between_teams(team1, team2, database_name="International_matches
         games = db._cursor.fetchall()
         return games
 
-#Sucht alle Spiele die  ein Land gespielt hat
-def get_matches_by_team(team, database_name="International_matches.db"):
+#Sucht alle Spiele die ein Land gespielt hat
+def get_matches_by_team(team: str, database_name: str ="International_matches.db"):
     """Holt alle Spiele eines Teams aus der Datenbank (egal ob Heim- oder Auswärtsspiel)."""
     query = """
         SELECT * 
@@ -108,7 +101,7 @@ def get_matches_by_team(team, database_name="International_matches.db"):
         return games
 
 #Sucht alle Spiele eines Turniers
-def get_matches_by_tournament(tournament_name, database_name="International_matches.db"):
+def get_matches_by_tournament(tournament_name: str, database_name: str="International_matches.db"):
     """Holt alle Spiele eines bestimmten Turniers aus der Datenbank."""
     query = """
         SELECT * 
@@ -123,7 +116,7 @@ def get_matches_by_tournament(tournament_name, database_name="International_matc
         return games
 
 #Sucht alle Turniere, an den ein Team teilgenommen hat.
-def get_tournaments_by_team(team, database_name="International_matches.db"):
+def get_tournaments_by_team(team: str, database_name: str="International_matches.db"):
     """Holt alle Turniere, an denen ein Team teilgenommen hat."""
     query = """
         SELECT DISTINCT tournament 

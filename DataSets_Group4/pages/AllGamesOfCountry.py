@@ -7,6 +7,23 @@ from core.visualizations import plot_team_record_pie_chart
 
 st.title("📊 Länderspiele anzeigen")
 
+st.markdown(
+    """  
+    Wähle ein Land und analysiere die komplette Bilanz der Nationalmannschaft!  
+
+    **🔹 Gesamtbilanz des Teams**  
+    Ein übersichtliches Kreisdiagramm 🥧 zeigt dir, wie oft das Team gewonnen 🏆, unentschieden gespielt 🤝 oder verloren ❌ hat.  
+
+    **🔹 Turnierhistorie**  
+    Hier findest du eine Tabelle 📋 mit allen Turnieren, an denen das Team teilgenommen hat – inklusive Siege, Niederlagen, Unentschieden, erzielte Tore ⚽, Gegentore und der Anzahl der Teilnahmen.  
+
+    **🔹 Alle Spiele im Überblick**  
+    In der letzten Tabelle werden alle bisherigen Spiele der Mannschaft mit Ergebnissen und weiteren Details aufgeführt.  
+
+    Tauche in die Statistiken ein und entdecke die Erfolge deines Teams! 🚀  
+    """
+)
+
 countries = get_unique_countries()
 
 # Falls Länder vorhanden sind, eine Selectbox anzeigen

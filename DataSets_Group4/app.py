@@ -1,11 +1,26 @@
 import streamlit as st
 
 def startseite():
-    st.title("⚽️ Football Result Predictor")
-    st.write("Willkommen zu unserem interaktiven Fußball-Dashboard! Hier kannst du nicht nur vergangene Länderspiele eines Teams einsehen, sondern auch die Gewinnwahrscheinlichkeit zwischen zwei Teams berechnen.")
-    st.write("✨ Funktionen:")
-    st.write("📅 Alle Spiele eines Teams anzeigen – Wähle ein Team aus und erhalte eine Übersicht über alle vergangenen Begegnungen.")
-    st.write("📊 Gewinnwahrscheinlichkeit berechnen – Vergleiche zwei Teams und erhalte eine Einschätzung darüber, welches Team die besseren Chancen auf den Sieg hat.")
+    st.title("⚽ Willkommen zur Fußball-Statistik-App 📊🏆")
+
+    st.markdown(
+        """  
+        Entdecke spannende Fußballstatistiken und analysiere die Erfolge verschiedener Teams! Diese App bietet dir umfassende Einblicke in die Ergebnisse, Turniere und Vergleiche zwischen Nationalmannschaften.  
+
+        ### 🔍 Was kannst du hier machen?  
+
+        **🏅 Ländervergleich:**  
+        Vergleiche zwei Nationalmannschaften und sieh dir ihre bisherigen Duelle an. Ein übersichtliches Kreisdiagramm 🥧 zeigt dir die Anzahl der Siege 🏆, Unentschieden 🤝 und Niederlagen ❌.  
+
+        **📊 Team-Statistiken:**  
+        Wähle eine Nationalmannschaft und analysiere ihre Gesamtbilanz. Entdecke alle Turnierteilnahmen, Siege, Niederlagen, Tore ⚽ und Gegentore.  
+
+        **🏆 Turnier-Statistiken:**  
+        Wähle ein Turnier und sieh dir alle Teams an, die jemals daran teilgenommen haben. Erfahre, wie viele Punkte sie gesammelt haben und vergleiche ihre Leistungen basierend auf Toren und Tordifferenzen.  
+
+        Nutze diese Daten, um tiefere Einblicke in die Fußballgeschichte zu gewinnen und spannende Trends zu entdecken! 🚀  
+        """
+    )
     st.image("static/Stadion.jpg")
 
 pg = st.navigation([st.Page(startseite, title= "🏠 Startseite"),

@@ -2,10 +2,15 @@ import pandas as pd
 
 from core.database import get_matches_by_tournament,get_tournaments_by_team
 
+def calculate_win_probabilities(matches, team1: str, team2: str):
+    """
+    Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden.
 
-
-def calculate_win_probabilities(matches, team1, team2):
-    """Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden."""
+    :param matches: Liste der Matches
+    :param team1: Name des ersten Teams
+    :param team2: Name des zweiten Teams
+    :return: Dictionary mit Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden
+    """
     team1_wins = 0
     team2_wins = 0
     draws = 0
@@ -32,8 +37,14 @@ def calculate_win_probabilities(matches, team1, team2):
         "draw": draws / total_matches,
     }
 
-def get_team_record(team, matches):
-    """Berechnet die Anzahl der Siege, Niederlagen und Unentschieden eines Teams."""
+def get_team_record(team: str, matches):
+    """
+    Berechnet die Anzahl der Siege, Niederlagen und Unentschieden eines Teams.
+
+    :param team: Ausgewählte Mannschaft
+    :param matches: Liste der Matches
+    :return: Dictionary mit Anzahl der Siege, Unentschieden mit Niederlagen
+    """
 
     # Initialisiere Zähler
     wins = 0
@@ -59,7 +70,13 @@ def get_team_record(team, matches):
     return {"Siege": wins, "Unentschieden": draws, "Niederlagen": losses}
 
 def calculate_team_statistics(matches):
-    """Berechnet Statistiken für jedes Team in einem Turnier und die durchschnittlichen Tore pro Spiel."""
+    """
+    Berechnet Statistiken für jedes Team in einem Turnier und die durchschnittlichen Tore pro Spiel.
+
+    :param matches: Liste der Spiele mit Teamnamen und Ergebnissen.
+    :return team_stats: Tupel aus Dictionary mit Team Stats
+    :return avg_goals: float mit den durchschnittlichen Toren
+    """
     team_stats = {}
     total_goals = 0
 
@@ -92,22 +109,39 @@ def calculate_team_statistics(matches):
 
         total_goals += home_score + away_score
 
-    avg_goals = round(total_goals / len(matches), 2) if matches else 0
+    avg_goals: float = round(total_goals / len(matches), 2) if matches else 0
 
     return team_stats, avg_goals
 
 
 def get_best_teams(stats_dict):
-    """Sortiert die Teams nach Punkten und gibt die Top-Teams zurück."""
+    """
+    Sortiert die Teams nach Punkten und gibt die Top-Teams zurück.
+
+    :param stats_dict: Dictionary mit Team_Statistiken
+    :return: Sortiertes Pandas DataFrame mit den besten Teams.
+    """
+    if not stats_dict:
+        return pd.DataFrame(columns=["Punkte", "Tore", "Gegentore", "Tordifferenz"]) # Leere Tabelle mit Spalten
+
     stats_df = pd.DataFrame.from_dict(stats_dict, orient="index")
+
+    #Hier wird die Tordifferenz berechnet
     stats_df["Tordifferenz"] = stats_df["Tore"] - stats_df["Gegentore"]
+
+    #Hier wird nach Punkten absteigend sortiert
     stats_df = stats_df.sort_values(by=["Punkte", "Tordifferenz", "Tore"], ascending=[False, False, False])
 
     return stats_df
 
 
 def find_biggest_win(matches):
-    """Findet das Spiel mit dem höchsten Sieg (größter Torunterschied)."""
+    """
+    Findet das Spiel mit dem höchsten Sieg (größter Torunterschied)
+
+    :param matches: Liste mit Spielen Teams und Ergebnissen
+    :return: Sting mit dem Spiel mit dem höchsten Sieg
+    """
     biggest_win = max(matches, key=lambda match: abs(match["home_score"] - match["away_score"]), default=None)
     if biggest_win:
         return f"{biggest_win['home_team']} {biggest_win['home_score']} - {biggest_win['away_score']} {biggest_win['away_team']}"
@@ -115,7 +149,13 @@ def find_biggest_win(matches):
 
 
 def get_top_teams_by_tournament(tournament_name, database_name="International_matches.db"):
-    """Gibt eine umfassende Turnieranalyse zurück."""
+    """
+    Gibt eine umfassende Turnieranalyse zurück
+
+    :param tournament_name: Name des Turniers
+    :param database_name: Name der DB
+    :return: Dictionary mit Top-Teams, höchstem Sieg und durchschnittlichen Toren pro Spiel
+    """
     matches = get_matches_by_tournament(tournament_name, database_name)
 
     if not matches:
@@ -133,7 +173,14 @@ def get_top_teams_by_tournament(tournament_name, database_name="International_ma
 
 
 def get_team_tournament_performance(team, database_name="International_matches.db"):
-    """Berechnet die Turnier-Performance eines Teams durch Wiederverwendung bestehender Funktionen."""
+    """
+    Berechnet die Turnier-Performance eines Teams durch Wiederverwendung bestehender Funktionen
+
+    :param team: Name des Teams
+    :param database_name: Name der DB
+    :return: Liste mit Turnierstatistiken.
+    """
+
     tournaments = get_tournaments_by_team(team, database_name)
     performance = []
 
