@@ -1,5 +1,6 @@
 import streamlit as st
 
+#Cedric
 pg = st.navigation([st.Page("pages/Startseite.py", title="🏠 Startseite"),
                     st.Page("pages/LaenderVergleich.py", title="🔄 Länder Vergleich"),
                     st.Page("pages/LaenderDetails.py", title="📋 Länder Details"),

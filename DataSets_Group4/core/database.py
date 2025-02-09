@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 
+#Luca
 class DatabaseConnector:
     def __init__(self,database_name: str) -> None:
         """
@@ -43,6 +44,7 @@ class DatabaseConnector:
         df.to_sql(table_name, self._connection, if_exists="replace", index=False)
         self._connection.commit()
 
+#Oliver
 #Ruft eindeutige Länder aus der DB ab
 def get_unique_countries(database_name: str ="International_matches.db"):
     """Holt alle eindeutigen Länder aus den Spalten 'home_team' und 'away_team'."""
@@ -57,6 +59,7 @@ def get_unique_countries(database_name: str ="International_matches.db"):
         countries = [row["team"] for row in db._cursor.fetchall()]
         return countries
 
+#Luca
 #Sucht alle Turniere aus der DB
 def get_tournaments(database_name: str ="International_matches.db"):
     """Holt alle einzigartigen Turniernamen aus der Datenbank."""
@@ -71,6 +74,7 @@ def get_tournaments(database_name: str ="International_matches.db"):
         tournaments = [row["tournament"] for row in db._cursor.fetchall()]
         return tournaments
 
+#Oliver
 #Sucht Spiele zwischen zwei Ländern aus der DB
 def get_matches_between_teams(team1: str, team2: str, database_name: str="International_matches.db"):
     """Holt alle Spiele zwischen zwei Teams aus der Datenbank."""
@@ -85,6 +89,7 @@ def get_matches_between_teams(team1: str, team2: str, database_name: str="Intern
         games = db._cursor.fetchall()
         return games
 
+#Victor
 #Sucht alle Spiele die ein Land gespielt hat
 def get_matches_by_team(team: str, database_name: str ="International_matches.db"):
     """Holt alle Spiele eines Teams aus der Datenbank (egal ob Heim- oder Auswärtsspiel)."""
@@ -100,6 +105,7 @@ def get_matches_by_team(team: str, database_name: str ="International_matches.db
         games = db._cursor.fetchall()
         return games
 
+#Luca
 #Sucht alle Spiele eines Turniers
 def get_matches_by_tournament(tournament_name: str, database_name: str="International_matches.db"):
     """Holt alle Spiele eines bestimmten Turniers aus der Datenbank."""
@@ -115,6 +121,7 @@ def get_matches_by_tournament(tournament_name: str, database_name: str="Internat
         games = db._cursor.fetchall()
         return games
 
+#Victor
 #Sucht alle Turniere, an den ein Team teilgenommen hat.
 def get_tournaments_by_team(team: str, database_name: str="International_matches.db"):
     """Holt alle Turniere, an denen ein Team teilgenommen hat."""

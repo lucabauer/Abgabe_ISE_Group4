@@ -3,6 +3,7 @@ from core.database import DatabaseConnector
 
 if __name__ == "__main__":
 
+#Luca
     csv_file = "data/FootballResults.csv"  #Name der CSV-Datei
     database_name = "International_matches.db" #Name der SQLite-Datenbank
     table_name = "matches" # Name der Tabelle in der Datenbank

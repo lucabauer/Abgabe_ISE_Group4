@@ -2,9 +2,10 @@ import streamlit as st
 import pandas as pd
 
 from core.calculations import get_team_record, get_team_tournament_performance
-from core.database import get_unique_countries, get_matches_by_team, get_matches_by_tournament
+from core.database import get_unique_countries, get_matches_by_team
 from core.visualizations import plot_team_record_pie_chart
 
+#Cedric
 st.title("📊 Länderspiele anzeigen")
 
 st.markdown(
@@ -24,6 +25,7 @@ st.markdown(
     """
 )
 
+#Victor
 countries = get_unique_countries()
 
 # Falls Länder vorhanden sind, eine Selectbox anzeigen
@@ -42,14 +44,17 @@ if countries:
         if matches:
             record = get_team_record(team, matches)
 
+            #Bilanz anzeigen
             st.write(f"🏆 **Bilanz von {team}:**")
             st.write(f"✅ **Siege:** {record['Siege']}")
             st.write(f"➖ **Unentschieden:** {record['Unentschieden']}")
             st.write(f"❌ **Niederlagen:** {record['Niederlagen']}")
 
-            # Danach die Visualisierung
+            #Cedric(
+            #Visualisierung anzeigen
             fig = plot_team_record_pie_chart(record)
             st.plotly_chart(fig)
+            #)
 
             # Danach Turnierleistung anzeigen
             tournament_performance = get_team_tournament_performance(team)

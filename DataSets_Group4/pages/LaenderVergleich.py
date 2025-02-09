@@ -5,8 +5,7 @@ from core.calculations import calculate_head_to_head_stats
 from core.visualizations import  plot_head_to_head_stats
 from core.database import get_matches_between_teams, get_unique_countries
 
-# Setzt den richtigen Namen in der Sidebar-Navigation
-st.set_page_config(page_title="🔄 Länder Vergleich", page_icon="🔄")
+#Cedric
 
 st.title("🔄 Länder Vergleich")
 
@@ -24,6 +23,7 @@ st.markdown(
     """
 )
 
+#Oliver
 countries = get_unique_countries()
 
 if countries:
@@ -52,8 +52,10 @@ if countries:
 
             head_to_head_stats = calculate_head_to_head_stats(matches, team1, team2)
 
+            #Cedric (
             fig = plot_head_to_head_stats(head_to_head_stats, team1, team2)
             st.plotly_chart(fig)
+            #)
 
             st.write(f"{team1} hat {head_to_head_stats['team1_win']:.2%} der Spiele gewonnen")
             st.write(f"{team2} hat {head_to_head_stats['team2_win']:.2%} der Spiele gewonnen")

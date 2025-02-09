@@ -3,6 +3,7 @@ import streamlit as st
 from core.database import get_tournaments
 from core.calculations import get_top_teams_by_tournament
 
+#Cedric
 st.title("🏆 Turnier-Analyse")
 
 st.markdown(
@@ -25,6 +26,7 @@ st.markdown(
     """
 )
 
+#Cedric
 tournament = get_tournaments()
 if tournament:
     tournament = st.selectbox(
@@ -33,6 +35,8 @@ if tournament:
         index=None,
         placeholder="Turnier"
     )
+
+#Luca
 if tournament:
     result = get_top_teams_by_tournament(tournament)
 

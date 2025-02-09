@@ -2,6 +2,7 @@ import pandas as pd
 
 from core.database import get_matches_by_tournament,get_tournaments_by_team
 
+#Oliver
 def calculate_head_to_head_stats(matches, team1: str, team2: str):
     """
     Berechnet die Wahrscheinlichkeiten für Sieg, Niederlage und Unentschieden.
@@ -37,6 +38,7 @@ def calculate_head_to_head_stats(matches, team1: str, team2: str):
         "draw": draws / total_matches,
     }
 
+#Victor
 def get_team_record(team: str, matches):
     """
     Berechnet die Anzahl der Siege, Niederlagen und Unentschieden eines Teams.
@@ -69,6 +71,7 @@ def get_team_record(team: str, matches):
 
     return {"Siege": wins, "Unentschieden": draws, "Niederlagen": losses}
 
+#Victor
 def calculate_team_statistics(matches):
     """
     Berechnet Statistiken für jedes Team in einem Turnier und die durchschnittlichen Tore pro Spiel.
@@ -113,7 +116,7 @@ def calculate_team_statistics(matches):
 
     return team_stats, avg_goals
 
-
+#Luca
 def get_best_teams(stats_dict):
     """
     Sortiert die Teams nach Punkten und gibt die Top-Teams zurück.
@@ -134,7 +137,7 @@ def get_best_teams(stats_dict):
 
     return stats_df
 
-
+#Luca
 def find_biggest_win(matches):
     """
     Findet das Spiel mit dem höchsten Sieg (größter Torunterschied)
@@ -147,7 +150,7 @@ def find_biggest_win(matches):
         return f"{biggest_win['home_team']} {biggest_win['home_score']} - {biggest_win['away_score']} {biggest_win['away_team']}"
     return "Keine Daten verfügbar"
 
-
+#Luca
 def get_top_teams_by_tournament(tournament_name, database_name="International_matches.db"):
     """
     Gibt eine umfassende Turnieranalyse zurück
@@ -171,7 +174,7 @@ def get_top_teams_by_tournament(tournament_name, database_name="International_ma
         "Durchschnittliche Tore pro Spiel": avg_goals
     }
 
-
+#Victor
 def get_team_tournament_performance(team, database_name="International_matches.db"):
     """
     Berechnet die Turnier-Performance eines Teams durch Wiederverwendung bestehender Funktionen
